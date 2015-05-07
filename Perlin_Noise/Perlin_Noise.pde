@@ -1,5 +1,5 @@
-float x = 0;
-float y = 0;
+float xMove = 0;
+float yMove = 0;
 float noiseScale=0.01;
 float scaleNoise=0.01;
 int rot = 0;
@@ -51,25 +51,21 @@ void draw() {
   b += bflip;
 
   background(255);
-  //up/down, sik color
-  //ex = ex + 5;
-  //for (int x=0; x < width; x++) {
-  //float valNoise = noise((500+x)*scaleNoise, ex*scaleNoise);
-  //stroke(valNoise*random(255), random(0), random(255));
-  //line(x, -500+valNoise*80, x, height);
-  //}
-  //sideways?
+
   pushMatrix();
-  x += 1;
-  y += 1;
+
+  xMove += 1;
+  yMove += 1;
   rot = 0;
+  
   for (int x=0; x < height; x++) {
-    float valNoise = noise((500+x)*scaleNoise, y*scaleNoise);
-    stroke(valNoise/1*r, valNoise/1*g, valNoise/1*b, 127);
+    float valNoise = noise((500+x)*scaleNoise, yMove*scaleNoise);
     pushMatrix();
     if (circle == false) {
+      stroke(valNoise/1*r, valNoise/1*g, valNoise/1*b, 127);
       translate(width/2.00, 0);
     } else {
+      stroke(valNoise/1*r, valNoise/1*g, valNoise/1*b);
       translate(width/2, height/2);
       rotate(rot);
     }
@@ -77,16 +73,19 @@ void draw() {
     popMatrix();
     rot += 1;
   }
+  
   rot = 0;
-  x += 1;
+  xMove += 1;
+  
   for (int x=0; x < width; x++) {
-    float noiseVal = noise((500+x)*noiseScale, x*noiseScale);
-    stroke(255-noiseVal/1*r, 255-noiseVal/1*g, 255-noiseVal/1*b, 127);
+    float noiseVal = noise((500+x)*noiseScale, xMove*noiseScale);
     pushMatrix();
     if (circle == false) {
+      stroke(255-noiseVal/1*r, 255-noiseVal/1*g, 255-noiseVal/1*b, 127);
       translate(width, height/2);
       rotate(PI/2);
     } else {
+      stroke(255-noiseVal/1*r, 255-noiseVal/1*g, 255-noiseVal/1*b);
       translate(width/2, height/2);
       rotate(rot);
     }
@@ -94,6 +93,7 @@ void draw() {
     popMatrix();
     rot += 1;
   }
+
   popMatrix();
 }
 
